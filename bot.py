@@ -23,5 +23,18 @@ def menu():
 def callback(call):
     if call.data == 'update':
         bot.edit_message_text(get_rates(), call.message.chat.id, call.message.message_id, reply_markup=menu())
+import os
+from threading import Thread
+from flask import Flask
 
+app = Flask(__name__)
+
+@app.route('/')
+def health():
+    return "OK"
+
+def run_flask():
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 10000)))
+
+Thread(target=run_flask).start()
 bot.polling()
